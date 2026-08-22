@@ -1,0 +1,12 @@
+# Ignore everything by default
+/*
+
+# Keep .gitignore itself
+!.gitignore
+
+# Allow all JavaScript files
+!*.js
+!**/*.js
+
+# Allow the 'angular hooks' file
+!angular hooks

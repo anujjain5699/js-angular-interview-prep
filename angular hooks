@@ -1,0 +1,119 @@
+# Angular Lifecycle Hooks Explained
+
+Every Angular component goes through a specific lifecycle from the moment it is created until it is destroyed. Angular provides "lifecycle hooks" (methods) that allow you to tap into key moments of this lifecycle.
+
+Here is the exact order they execute, what they do, and when to use them.
+
+---
+
+## The Execution Order
+
+When a component is created, the hooks run in this exact sequence:
+
+1. `constructor()` *(Not an Angular hook, but it runs first)*
+2. `ngOnChanges()`
+3. `ngOnInit()`
+4. `ngDoCheck()`
+5. `ngAfterContentInit()`
+6. `ngAfterContentChecked()`
+7. `ngAfterViewInit()`
+8. `ngAfterViewChecked()`
+
+When a component is removed from the DOM:
+9. `ngOnDestroy()`
+
+---
+
+## 1. `ngOnChanges`
+**When it runs:** Runs **first** (before `ngOnInit`) and then runs again **every time** a data-bound `@Input` property changes.
+**Purpose:** To react when the parent component sends new data to this child component.
+**Use Case:** If you pass `[userId]="id"` to a child, and the parent changes `id`, `ngOnChanges` fires so the child can fetch new data.
+
+```typescript
+ngOnChanges(changes: SimpleChanges) {
+  if (changes['userId']) {
+    console.log('User ID changed from', changes['userId'].previousValue, 'to', changes['userId'].currentValue);
+  }
+}
+```
+
+## 2. `ngOnInit`
+**When it runs:** Runs exactly **once**, immediately after the first `ngOnChanges`.
+**Purpose:** This is where you initialize your component. It is the best place to fetch data from a server or set up initial variables.
+**Use Case:** Calling an API service to load a list of users when the page loads.
+
+```typescript
+ngOnInit() {
+  this.userService.getUsers().subscribe(data => this.users = data);
+}
+```
+*(Note: Never fetch data in the `constructor`. The `@Input` values are not available yet in the constructor! They are available in `ngOnInit`.)*
+
+## 3. `ngDoCheck`
+**When it runs:** Runs **immediately after** every `ngOnChanges` and `ngOnInit`, and runs on **every single change detection cycle** in the app.
+**Purpose:** To write custom change detection logic when Angular fails to detect a change (like when you mutate an array instead of replacing it).
+**Warning:** This runs *very* frequently (every time you click a button or type in an input anywhere on the page). Be very careful putting heavy logic here, or you will slow down your app.
+
+## 4. `ngAfterContentInit`
+**When it runs:** Runs exactly **once** after Angular projects external content into the component's view (using `<ng-content>`).
+**Purpose:** To interact with content projected from the parent component using `@ContentChild`.
+
+```typescript
+// Parent HTML: <app-card> <h1 #header>Title</h1> </app-card>
+@ContentChild('header') headerElement: ElementRef;
+
+ngAfterContentInit() {
+  // Now you can safely access the projected <h1> element
+  console.log(this.headerElement.nativeElement.innerText); 
+}
+```
+
+## 5. `ngAfterContentChecked`
+**When it runs:** Runs after `ngAfterContentInit` and after every subsequent `ngDoCheck`.
+**Purpose:** To respond after the projected content has been checked by Angular's change detection. Rarely used.
+
+## 6. `ngAfterViewInit`
+**When it runs:** Runs exactly **once** after Angular initializes the component's views and child views.
+**Purpose:** This is the **first time** you can safely access HTML elements in your own template using `@ViewChild`.
+**Use Case:** Integrating a third-party JavaScript library (like a jQuery chart or a map) that needs to attach to a `<canvas>` or `<div>` element in your HTML.
+
+```typescript
+// Child HTML: <canvas #myChart></canvas>
+@ViewChild('myChart') chartElement: ElementRef;
+
+ngAfterViewInit() {
+  // Safe to access the canvas element now!
+  new Chart(this.chartElement.nativeElement, { ... });
+}
+```
+
+## 7. `ngAfterViewChecked`
+**When it runs:** Runs after `ngAfterViewInit` and after every subsequent check of the component's views and child views.
+**Purpose:** To respond after Angular checks the component's template for updates.
+**Warning:** Like `ngDoCheck`, this runs constantly. If you try to update a variable here that is displayed in the HTML, Angular will throw the famous `ExpressionChangedAfterItHasBeenCheckedError`.
+
+## 8. `ngOnDestroy`
+**When it runs:** Runs exactly **once**, just before Angular destroys the component and removes it from the DOM.
+**Purpose:** **Cleanup.** If you don't clean up certain things, they will stay in memory forever and cause memory leaks.
+**Use Case:** 
+1. Unsubscribing from RxJS Observables (if you didn't use the `async` pipe or `takeUntilDestroyed`).
+2. Clearing `setInterval` or `setTimeout`.
+3. Detaching event listeners attached to the window or document.
+
+```typescript
+ngOnDestroy() {
+  this.mySubscription.unsubscribe(); // Stop listening
+  clearInterval(this.myTimer);       // Stop the timer
+}
+```
+
+---
+
+## 🎯 Summary for Interviews
+
+If an interviewer asks about lifecycle hooks, focus on these 4, as they are used 99% of the time:
+
+1. **`ngOnInit`:** Use this to initialize data and call APIs. `@Input` properties are ready here (unlike the constructor).
+2. **`ngOnChanges`:** Use this to react when an `@Input` property changes. It gives you the old and new values.
+3. **`ngAfterViewInit`:** Use this when you need to grab an HTML element from your template using `@ViewChild` (often to integrate non-Angular libraries).
+4. **`ngOnDestroy`:** Use this to prevent memory leaks by unsubscribing from Observables and clearing timers.

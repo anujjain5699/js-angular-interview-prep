@@ -4,8 +4,9 @@
 # Keep .gitignore itself
 !.gitignore
 
-# Keep README.md
+# Keep Documentation
 !README.md
+!CONTRIBUTING.md
 
 # Allow all JavaScript files and scripts
 !*.js
@@ -14,7 +15,6 @@
 # Allow the 'angular hooks' file
 !angular hooks
 
-# Allow GitHub Actions workflows (optional automated CI)
+# Allow GitHub Actions workflows
 !.github
 !.github/**
-

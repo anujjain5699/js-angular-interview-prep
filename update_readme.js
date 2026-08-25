@@ -12,7 +12,8 @@ const IGNORED_FILES = new Set([
   'package.json',
   'package-lock.json',
   'SESSION.md',
-  'AGENTS.md'
+  'AGENTS.md',
+  'CONTRIBUTING.md'
 ]);
 
 // Map of known topics or auto-formatter

@@ -1,6 +1,9 @@
-# 🚀 JavaScript & Angular Interview Preparation
+# 🚀 JavaScript & Angular Machine Coding & Interview Prep
 
-A curated collection of JavaScript machine coding challenges, asynchronous programming patterns, closures, and Angular core concepts with in-depth explanations and mental models.
+[![Test Solutions](https://github.com/anujjain5699/js-angular-interview-prep/actions/workflows/test-solutions.yml/badge.svg)](https://github.com/anujjain5699/js-angular-interview-prep/actions/workflows/test-solutions.yml)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
+> A curated collection of **JavaScript machine coding challenges**, **custom polyfills**, **asynchronous concurrency patterns**, and **Angular core concepts** with in-depth explanations, timeline traces, and mental models for frontend technical interviews.
 
 ---
 
@@ -43,6 +46,15 @@ A curated collection of JavaScript machine coding challenges, asynchronous progr
 * Accumulate arguments using `...args` and return an inner function `(...nextArgs)`.
 * Stop condition: `nextArgs.length === 0` $\rightarrow$ reduce and return total.
 
+### 4. Deep Comparison (`deepEqual`)
+* **`NaN` Comparison**: `NaN === NaN` is `false` in standard JS; use `Object.is(a, b)` or `Number.isNaN()` to handle value equality accurately.
+* **Array vs Object**: `typeof []` and `typeof {}` are both `'object'`; verify `Array.isArray(a) !== Array.isArray(b)` to prevent empty array `{}` and `[]` false positives.
+* **Prototype-Safe Keys**: Use `Object.hasOwn(b, key)` instead of `b.hasOwnProperty(key)` to prevent crashes with `Object.create(null)` or shadowed properties.
+
+### 5. Deep Clone with Circular References
+* When an object references itself (`user.myself = user`), standard recursion causes a call stack overflow.
+* **Solution**: Maintain an object cache (via `WeakMap` or `{ original, copy }` cache array) and return the cached copy whenever a previously visited reference is encountered.
+
 ---
 
 ## ⚡ How to Auto-Update this README
@@ -73,8 +85,21 @@ node infiniteCurry.js
 
 # Run Debounce & Throttle demo
 node debounce_throttle.js
+
+# Run Deep Comparison demo
+node deep_comparison.js
+
+# Run Deep Clone demo
+node deepClone.js
+
+# Run Closure Counter demo
+node counter_using_closures.js
+
+# Run Once Function demo
+node once.js
 ```
 
 ---
 
 ⭐ Maintained by [Anuj Jain](https://github.com/anujjain5699)
+

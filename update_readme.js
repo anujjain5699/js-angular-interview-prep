@@ -38,11 +38,82 @@ function getTopicDetails(filename) {
       category: 'Performance & Timing',
       concept: '`clearTimeout`, `isWaiting` cooldown flag'
     },
+    'deep_comparison.js': {
+      title: 'Deep Comparison / Deep Equal',
+      category: 'Objects & Recursion',
+      concept: 'Structural equality, `Object.hasOwn`, `Object.is`, recursive keys'
+    },
+    'deepClone.js': {
+      title: 'Deep Clone with Circular Reference',
+      category: 'Objects & Recursion',
+      concept: 'Recursion, `WeakMap` for circular references'
+    },
+    'once.js': {
+      title: 'Once Function Execution',
+      category: 'Functional JS / Closures',
+      concept: 'Closure flag (`hasRun`), result caching'
+    },
+    'counter_using_closures.js': {
+      title: 'Counter using Closures',
+      category: 'Closures & Scope',
+      concept: 'Lexical scoping, encapsulation, state preservation'
+    },
     'angular hooks': {
       title: 'Angular Lifecycle Hooks',
       category: 'Angular Core',
       concept: 'Component lifecycle, Change Detection'
+    },
+    'lru_cache.js': {
+      title: 'LRU Cache (Least Recently Used)',
+      category: 'Data Structures',
+      concept: '`Map` insertion-order / Doubly Linked List, $O(1)$ get & put'
+    },
+    'promise_all.js': {
+      title: 'Promise.all & Polyfills',
+      category: 'Async / Promises',
+      concept: 'Custom `Promise.all`, `allSettled`, `race` implementation'
+    },
+    'deep_clone.js': {
+      title: 'Deep Clone with Circular Reference',
+      category: 'Objects & Recursion',
+      concept: 'Recursion, `WeakMap` for circular references'
+    },
+    'event_emitter.js': {
+      title: 'Event Emitter (PubSub)',
+      category: 'Design Patterns',
+      concept: '`on`, `off`, `emit`, `once` subscription system'
+    },
+    'memoize.js': {
+      title: 'Function Memoization',
+      category: 'Functional JS',
+      concept: 'Higher-order function, argument serialization cache'
+    },
+    'pipe_compose.js': {
+      title: 'Pipe & Compose Functions',
+      category: 'Functional JS',
+      concept: 'Unary function chaining with `reduce` & `reduceRight`'
+    },
+    'flatten_array.js': {
+      title: 'Flatten Nested Array & Object',
+      category: 'Recursion & Arrays',
+      concept: 'Recursive flattening, custom depth control'
+    },
+    'custom_bind.js': {
+      title: 'Function.prototype.bind Polyfill',
+      category: 'Core JS & Prototypes',
+      concept: 'Context binding (`this`), partial application'
+    },
+    'retry_promise.js': {
+      title: 'Async Retry with Exponential Backoff',
+      category: 'Async / Resilience',
+      concept: 'Automatic API retries, delay multiplication'
+    },
+    'task_runner.js': {
+      title: 'Sequential & Batch Task Runner',
+      category: 'Async / Concurrency',
+      concept: 'Sequential execution with `reduce`, async queue'
     }
+
   };
 
   if (mapping[filename]) {

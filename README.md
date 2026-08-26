@@ -15,14 +15,15 @@
 | # | Topic / Problem | File Link | Category | Key Concept |
 |---|---|---|---|---|
 | 1 | **Angular Lifecycle Hooks** | [`angular hooks`](./angular%20hooks) | Angular Core | Component lifecycle, Change Detection |
-| 2 | **Counter using Closures** | [`counter_using_closures.js`](./counter_using_closures.js) | Closures & Scope | Lexical scoping, encapsulation, state preservation |
-| 3 | **Fixed Currying** | [`currying.js`](./currying.js) | Functional JS | Closure memory, recursion, rest operator |
-| 4 | **Debounce & Throttle** | [`debounce_throttle.js`](./debounce_throttle.js) | Performance & Timing | `clearTimeout`, `isWaiting` cooldown flag |
-| 5 | **Deep Clone with Circular Reference** | [`deepClone.js`](./deepClone.js) | Objects & Recursion | Recursion, `WeakMap` for circular references |
-| 6 | **Deep Comparison / Deep Equal** | [`deep_comparison.js`](./deep_comparison.js) | Objects & Recursion | Structural equality, `Object.hasOwn`, `Object.is`, recursive keys |
-| 7 | **Infinite Currying** | [`infiniteCurry.js`](./infiniteCurry.js) | Functional JS | `()` empty call terminator, closures |
-| 8 | **Once Function Execution** | [`once.js`](./once.js) | Functional JS / Closures | Closure flag (`hasRun`), result caching |
-| 9 | **Parallel Execution Limit** | [`parallel_limit.js`](./parallel_limit.js) | Async / Concurrency | Worker Pool pattern, `Promise.all` |
+| 2 | **Autocomplete Search Box (Typeahead)** | [`autocomplete_search.html`](./autocomplete_search.html) | DOM & Machine Coding | Fetch suggestions, event delegation, outside click dismissal |
+| 3 | **Counter using Closures** | [`counter_using_closures.js`](./counter_using_closures.js) | Closures & Scope | Lexical scoping, encapsulation, state preservation |
+| 4 | **Fixed Currying** | [`currying.js`](./currying.js) | Functional JS | Closure memory, recursion, rest operator |
+| 5 | **Debounce & Throttle** | [`debounce_throttle.js`](./debounce_throttle.js) | Performance & Timing | `clearTimeout`, `isWaiting` cooldown flag |
+| 6 | **Deep Clone with Circular Reference** | [`deepClone.js`](./deepClone.js) | Objects & Recursion | Recursion, `WeakMap` for circular references |
+| 7 | **Deep Comparison / Deep Equal** | [`deep_comparison.js`](./deep_comparison.js) | Objects & Recursion | Structural equality, `Object.hasOwn`, `Object.is`, recursive keys |
+| 8 | **Infinite Currying** | [`infiniteCurry.js`](./infiniteCurry.js) | Functional JS | `()` empty call terminator, closures |
+| 9 | **Once Function Execution** | [`once.js`](./once.js) | Functional JS / Closures | Closure flag (`hasRun`), result caching |
+| 10 | **Parallel Execution Limit** | [`parallel_limit.js`](./parallel_limit.js) | Async / Concurrency | Worker Pool pattern, `Promise.all` |
 
 <!-- AUTO-GENERATED-INDEX:END -->
 

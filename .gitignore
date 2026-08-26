@@ -11,6 +11,7 @@
 # Allow all JavaScript files and scripts
 !*.js
 !**/*.js
+!*.html
 
 # Allow the 'angular hooks' file
 !angular hooks

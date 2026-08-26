@@ -1,0 +1,166 @@
+<!--
+===================================================================================
+🔍 Machine Coding Challenge: Autocomplete Search Box (Typeahead Dropdown)
+Keywords: Vanilla JavaScript, DOM Manipulation, Fetch API, Autocomplete, Typeahead, 
+          Frontend Interview Question, Event Delegation, Outside Click Listener
+===================================================================================
+
+📌 Problem Statement:
+Build a performant, accessible Autocomplete Search Box in Vanilla JavaScript that
+fetches real-time matching suggestions as the user types and handles dropdown states.
+
+🎯 Core Requirements & Test Contracts:
+1. Fetch on Input (2+ chars):
+   - Listen to input events on `data-testid="autocomplete-input"`.
+   - When input length >= 2, fetch suggestions from API and render up to 3 items.
+   - Each suggestion must have `data-testid="suggestion"`.
+   - If input length < 2, collapse/remove dropdown from DOM.
+
+2. Selection & Auto-Fill:
+   - Clicking any suggestion populates the input with the item's title and closes dropdown.
+
+3. Outside Click Dismissal:
+   - Clicking anywhere outside `#root` / `#dropdown` closes the suggestion list.
+
+💡 Key Concepts & Patterns Covered:
+- DOM Event Delegation (`e.target.closest('[data-testid="suggestion"]')`)
+- Outside Click Listener (`!element.contains(e.target)`)
+- Clean DOM lifecycle (Mount/Unmount via `innerHTML = ''`)
+- Asynchronous API integration via `async/await` and `fetch()`
+===================================================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autocomplete Search Box - Vanilla JavaScript</title>
+</head>
+
+<body>
+    <div id="root">
+        <input type="text" data-testid="autocomplete-input" placeholder="Search products...">
+        <div id="dropdown"></div>
+    </div>
+
+    <script>
+        const root = document.getElementById('root')
+        const inputValue = document.querySelector('[data-testid="autocomplete-input"]')
+        const dropdown = document.getElementById('dropdown')
+
+        async function fetchSuggestions(searchText) {
+            const response = await fetch(`https://dummyjson.com/products/search?q=${searchText}`)
+            const result = await response.json()
+            let data = (result.products || []).slice(0, 3)
+            renderUI(data)
+        }
+
+        function renderUI(data) {
+            dropdown.innerHTML = ''
+            data.forEach(item => {
+                const suggestion = document.createElement('div')
+                suggestion.setAttribute('data-testid', 'suggestion')
+                suggestion.textContent = item.title
+
+                dropdown.appendChild(suggestion)
+            })
+        }
+
+        function closeDropDown() {
+            dropdown.innerHTML = ''
+        }
+
+        inputValue.addEventListener('input', (e) => {
+            const value = e.target.value.trim()
+            console.log('value', value)
+            if (value.length >= 2) {
+                fetchSuggestions(value)
+            } else {
+                closeDropDown()
+            }
+        })
+
+        dropdown.addEventListener('click', (e) => {
+            const suggestion = e.target.closest('[data-testid="suggestion"]')
+            if (suggestion) {
+                inputValue.value = suggestion.textContent
+                closeDropDown()
+            }
+        })
+
+        document.addEventListener('click', (e) => {
+            if (!inputValue.contains(e.target) && !dropdown.contains(e.target)) {
+                closeDropDown()
+            }
+        })
+
+    </script>
+</body>
+
+</html>
+
+<!-- autocomplete:
+#  Autocomplete Search Box
+
+A header search box that suggests matching items as the user types.
+The focus is on fetch-driven UI state and open/close behavior.
+
+Render your UI inside `<div id="root"></div>`. Fetch from any URL (e.g. `/api/search?q=...`) — the
+runner serves the mock dataset below to every `fetch` call. The response shape is
+`{ "products": [ ... ] }`; use each product's `title` as the suggestion label.
+
+## Core tasks (graded)
+- Task 1: Typing 2+ characters into the input fetches and shows up to 3 matching suggestions in a
+  dropdown.
+- Task 2: Clicking a suggestion fills the input with that value and closes the dropdown.
+- Task 3: Clicking anywhere outside the input/dropdown closes the dropdown.
+
+## DOM contract (required so your work can be auto-checked)
+- Text input: `data-testid="autocomplete-input"`
+- Each suggestion: `data-testid="suggestion"` — its text is exactly the suggestion label, and
+  clicking it sets the input's value to that same label.
+- Suggestions are in the DOM only while the dropdown is open (collapse by removing them).
+
+## Bonus tasks (optional, not auto-graded)
+- Arrow Up/Down to move a highlight through suggestions; Enter to select.
+- Debounce the fetch so it doesn't fire on every keystroke.
+- Ignore a stale in-flight response when a newer keystroke has fired.
+
+//=== MOCK ===
+{
+  "products": [
+    { "id": 1, "title": "iPhone 9" },
+    { "id": 2, "title": "iPhone X" },
+    { "id": 3, "title": "Samsung Universe 9" }
+  ]
+}
+
+//=== TESTS ===
+function __sug() { return document.querySelectorAll('[data-testid="suggestion"]'); }
+
+test('Task 1', async () => {
+  // Typing 2+ characters fetches and shows suggestions.
+  await type(document.querySelector('[data-testid="autocomplete-input"]'), 'ip');
+  await waitFor(function () { return __sug().length >= 1; });
+  expect(__sug().length).toBeGreaterThanOrEqual(1);
+});
+
+test('Task 2', async () => {
+  // Clicking a suggestion fills the input and closes the dropdown.
+  var text = __sug()[0].textContent.trim();
+  await click(__sug()[0]);
+  await flush();
+  expect(document.querySelector('[data-testid="autocomplete-input"]').value).toBe(text);
+  await waitFor(function () { return __sug().length === 0; });
+  expect(__sug().length).toBe(0);
+});
+
+test('Task 3', async () => {
+  // Clicking outside the component closes the dropdown.
+  await type(document.querySelector('[data-testid="autocomplete-input"]'), 'ip');
+  await waitFor(function () { return __sug().length >= 1; });
+  await click(document.body);
+  await waitFor(function () { return __sug().length === 0; });
+  expect(__sug().length).toBe(0);
+}); -->

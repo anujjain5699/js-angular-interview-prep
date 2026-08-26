@@ -64,6 +64,11 @@ function getTopicDetails(filename) {
       category: 'Angular Core',
       concept: 'Component lifecycle, Change Detection'
     },
+    'autocomplete_search.html': {
+      title: 'Autocomplete Search Box (Typeahead)',
+      category: 'DOM & Machine Coding',
+      concept: 'Fetch suggestions, event delegation, outside click dismissal'
+    },
     'lru_cache.js': {
       title: 'LRU Cache (Least Recently Used)',
       category: 'Data Structures',

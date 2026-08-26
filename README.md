@@ -2,6 +2,9 @@
 
 [![Test Solutions](https://github.com/anujjain5699/js-angular-interview-prep/actions/workflows/test-solutions.yml/badge.svg)](https://github.com/anujjain5699/js-angular-interview-prep/actions/workflows/test-solutions.yml)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Visitors](https://visitor-badge.laobi.icu/badge?page_id=anujjain5699.js-angular-interview-prep)](https://github.com/anujjain5699/js-angular-interview-prep)
+[![Stars](https://img.shields.io/github/stars/anujjain5699/js-angular-interview-prep?style=social)](https://github.com/anujjain5699/js-angular-interview-prep/stargazers)
+[![Forks](https://img.shields.io/github/forks/anujjain5699/js-angular-interview-prep?style=social)](https://github.com/anujjain5699/js-angular-interview-prep/network/members)
 
 > A curated collection of **JavaScript machine coding challenges**, **custom polyfills**, **asynchronous concurrency patterns**, and **Angular core concepts** with in-depth explanations, timeline traces, and mental models for frontend technical interviews.
 

@@ -8,6 +8,9 @@
 > A curated collection of **JavaScript machine coding challenges**, **custom polyfills**, **asynchronous concurrency patterns**, and **Angular core concepts** with in-depth explanations, timeline traces, and mental models for frontend technical interviews.
 
 <!-- TRAFFIC-STATS:START -->
+📊 **Repo Traffic** *(last 14 days, unique visitors only — updated 2026-08-26)*
+
+> 👁️ Total views: **0** &nbsp;|&nbsp; 🧑 Unique visitors: **0**
 <!-- TRAFFIC-STATS:END -->
 
 ---

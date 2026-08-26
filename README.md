@@ -10,7 +10,7 @@
 <!-- TRAFFIC-STATS:START -->
 📊 **Repo Traffic** *(last 14 days, unique visitors only — updated 2026-08-26)*
 
-> 👁️ Total views: **0** &nbsp;|&nbsp; 🧑 Unique visitors: **0**
+> 👁️ Total views: **51** &nbsp;|&nbsp; 🧑 Unique visitors: **1**
 <!-- TRAFFIC-STATS:END -->
 
 ---

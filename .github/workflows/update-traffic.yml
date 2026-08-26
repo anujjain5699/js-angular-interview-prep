@@ -12,7 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.TRAFFIC_TOKEN }}
+          token: ${{ secrets.TRAFFIC_SECRET }}
 
       - name: Fetch GitHub Traffic & Update README
         run: |

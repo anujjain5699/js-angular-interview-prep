@@ -18,19 +18,47 @@ jobs:
           token: ${{ secrets.TRAFFIC_SECRET }}
 
       - name: Fetch GitHub Traffic & Update README
+        env:
+          TRAFFIC_SECRET: ${{ secrets.TRAFFIC_SECRET }}
         run: |
-          VIEWS=$(curl -s \
-            -H "Authorization: token ${{ secrets.TRAFFIC_SECRET && secrets.TRAFFIC_SECRET || github.token }}" \
-            "https://api.github.com/repos/anujjain5699/js-angular-interview-prep/traffic/views")
+          python3 << 'EOF'
+          import subprocess
+          import json
+          import re
+          from datetime import datetime
+          import os
 
-          TOTAL=$(echo "$VIEWS" | grep -o '"count":[0-9]*' | head -1 | grep -o '[0-9]*')
-          UNIQUE=$(echo "$VIEWS" | grep -o '"uniques":[0-9]*' | head -1 | grep -o '[0-9]*')
-
-          TODAY=$(date '+%Y-%m-%d')
-
-          STATS="📊 **Repo Traffic** *(last 14 days, unique visitors only — updated $TODAY)*\n\n> 👁️ Total views: **$TOTAL** \&nbsp;|\&nbsp; 🧑 Unique visitors: **$UNIQUE**"
-
-          perl -i -0pe "s|<!-- TRAFFIC-STATS:START -->.*?<!-- TRAFFIC-STATS:END -->|<!-- TRAFFIC-STATS:START -->\n$STATS\n<!-- TRAFFIC-STATS:END -->|s" README.md
+          token = os.environ.get('TRAFFIC_SECRET')
+          
+          # Fetch traffic data
+          result = subprocess.run([
+              'curl', '-s',
+              '-H', f'Authorization: token {token}',
+              'https://api.github.com/repos/anujjain5699/js-angular-interview-prep/traffic/views'
+          ], capture_output=True, text=True)
+          
+          try:
+              data = json.loads(result.stdout)
+              total = sum(item.get('count', 0) for item in data)
+              unique = sum(item.get('uniques', 0) for item in data)
+          except:
+              total = 0
+              unique = 0
+          
+          today = datetime.now().strftime('%Y-%m-%d')
+          stats = f"📊 **Repo Traffic** *(last 14 days, unique visitors only — updated {today})*\n\n> 👁️ Total views: **{total}** &nbsp;|&nbsp; 🧑 Unique visitors: **{unique}**"
+          
+          # Update README
+          with open('README.md', 'r') as f:
+              content = f.read()
+          
+          pattern = r'<!-- TRAFFIC-STATS:START -->.*?<!-- TRAFFIC-STATS:END -->'
+          replacement = f'<!-- TRAFFIC-STATS:START -->\n{stats}\n<!-- TRAFFIC-STATS:END -->'
+          updated = re.sub(pattern, replacement, content, flags=re.DOTALL)
+          
+          with open('README.md', 'w') as f:
+              f.write(updated)
+          EOF
 
       - name: Commit & Push if changed
         run: |

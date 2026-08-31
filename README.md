@@ -26,9 +26,10 @@
 | 5 | **Debounce & Throttle** | [`debounce_throttle.js`](./debounce_throttle.js) | Performance & Timing | `clearTimeout`, `isWaiting` cooldown flag |
 | 6 | **Deep Clone with Circular Reference** | [`deepClone.js`](./deepClone.js) | Objects & Recursion | Recursion, `WeakMap` for circular references |
 | 7 | **Deep Comparison / Deep Equal** | [`deep_comparison.js`](./deep_comparison.js) | Objects & Recursion | Structural equality, `Object.hasOwn`, `Object.is`, recursive keys |
-| 8 | **Infinite Currying** | [`infiniteCurry.js`](./infiniteCurry.js) | Functional JS | `()` empty call terminator, closures |
-| 9 | **Once Function Execution** | [`once.js`](./once.js) | Functional JS / Closures | Closure flag (`hasRun`), result caching |
-| 10 | **Parallel Execution Limit** | [`parallel_limit.js`](./parallel_limit.js) | Async / Concurrency | Worker Pool pattern, `Promise.all` |
+| 8 | **Flatten object** | [`flatten_object.js`](./flatten_object.js) | JavaScript | Interview Solution |
+| 9 | **Infinite Currying** | [`infiniteCurry.js`](./infiniteCurry.js) | Functional JS | `()` empty call terminator, closures |
+| 10 | **Once Function Execution** | [`once.js`](./once.js) | Functional JS / Closures | Closure flag (`hasRun`), result caching |
+| 11 | **Parallel Execution Limit** | [`parallel_limit.js`](./parallel_limit.js) | Async / Concurrency | Worker Pool pattern, `Promise.all` |
 
 <!-- AUTO-GENERATED-INDEX:END -->
 

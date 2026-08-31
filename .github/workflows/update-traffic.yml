@@ -18,19 +18,83 @@ jobs:
           token: ${{ secrets.TRAFFIC_SECRET }}
 
       - name: Fetch GitHub Traffic & Update README
+        env:
+          TRAFFIC_SECRET: ${{ secrets.TRAFFIC_SECRET }}
         run: |
-          VIEWS=$(curl -s \
-            -H "Authorization: token ${{ secrets.TRAFFIC_SECRET && secrets.TRAFFIC_SECRET || github.token }}" \
-            "https://api.github.com/repos/anujjain5699/js-angular-interview-prep/traffic/views")
+          python3 << 'EOF'
+          import subprocess
+          import json
+          import re
+          from datetime import datetime
+          import os
 
-          TOTAL=$(echo "$VIEWS" | grep -o '"count":[0-9]*' | head -1 | grep -o '[0-9]*')
-          UNIQUE=$(echo "$VIEWS" | grep -o '"uniques":[0-9]*' | head -1 | grep -o '[0-9]*')
-
-          TODAY=$(date '+%Y-%m-%d')
-
-          STATS="📊 **Repo Traffic** *(last 14 days, unique visitors only — updated $TODAY)*\n\n> 🧑 Unique visitors: **$UNIQUE**"
-
-          perl -i -0pe "s|<!-- TRAFFIC-STATS:START -->.*?<!-- TRAFFIC-STATS:END -->|<!-- TRAFFIC-STATS:START -->\n$STATS\n<!-- TRAFFIC-STATS:END -->|s" README.md
+          token = os.environ.get('TRAFFIC_SECRET')
+          
+          if not token:
+              print("ERROR: TRAFFIC_SECRET not set!")
+              exit(1)
+          
+          # Fetch traffic data
+          result = subprocess.run([
+              'curl', '-s', '-w', '\n%{http_code}',
+              '-H', f'Authorization: token {token}',
+              'https://api.github.com/repos/anujjain5699/js-angular-interview-prep/traffic/views'
+          ], capture_output=True, text=True)
+          
+          output_lines = result.stdout.strip().split('\n')
+          http_code = output_lines[-1]
+          response_body = '\n'.join(output_lines[:-1])
+          
+          print(f"HTTP Status: {http_code}")
+          print(f"Response: {response_body}")
+          
+          total = 0
+          unique = 0
+          
+          if http_code == '200':
+              try:
+                  data = json.loads(response_body)
+                  print(f"Parsed data: {data}")
+                  
+                  # Handle both list and dict responses
+                  if isinstance(data, list):
+                      total = sum(item.get('count', 0) for item in data)
+                      unique = sum(item.get('uniques', 0) for item in data)
+                  elif isinstance(data, dict) and 'count' in data:
+                      total = data.get('count', 0)
+                      unique = data.get('uniques', 0)
+                  
+                  print(f"Total: {total}, Unique: {unique}")
+              except json.JSONDecodeError as e:
+                  print(f"JSON Parse Error: {e}")
+          else:
+              print(f"API Error: HTTP {http_code}")
+              print(f"Make sure TRAFFIC_SECRET has 'repo' scope permissions")
+          
+          today = datetime.now().strftime('%Y-%m-%d')
+          stats = f"📊 **Repo Traffic** *(last 14 days, unique visitors only — updated {today})*\n\n> 🧑 Unique visitors: **{unique}**"
+          
+          # Update README
+          with open('README.md', 'r') as f:
+              content = f.read()
+          
+          pattern = r'<!-- TRAFFIC-STATS:START -->.*?<!-- TRAFFIC-STATS:END -->'
+          replacement = f'<!-- TRAFFIC-STATS:START -->\n{stats}\n<!-- TRAFFIC-STATS:END -->'
+          
+          if re.search(pattern, content, re.DOTALL):
+              updated = re.sub(pattern, replacement, content, flags=re.DOTALL)
+          else:
+              print("WARNING: Traffic stats markers not found in README.md")
+              print("Add these lines to your README:")
+              print("<!-- TRAFFIC-STATS:START -->")
+              print("<!-- TRAFFIC-STATS:END -->")
+              updated = content
+          
+          with open('README.md', 'w') as f:
+              f.write(updated)
+          
+          print("README.md updated successfully")
+          EOF
 
       - name: Commit & Push if changed
         run: |

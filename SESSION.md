@@ -25,6 +25,7 @@
 - [x] **CI/CD Automated Execution Gate**: Added `.github/workflows/test-solutions.yml` and updated `update-readme.yml` with Node.js `lts/*` for automated PR status checks.
 - [x] **Autocomplete Search Box (Typeahead)**: Implemented and validated in `autocomplete_search.html` with real-time fetch, event delegation, DOM removal, and outside click dismissal.
 - [x] **SQL Interview Practice**: Added table creation, data insertion, and CTE/Window Function partitioning query in `products_partition.sql`.
+- [x] **Fill-Forward Category Problem**: Added a SQL example in `sql/fill_missing_category.sql` that carries the previous non-null category forward across NULL rows and includes an interview question plus expected output table.
 
 ## Next Planned Topics / Tasks
 - [ ] Deep Clone & Shallow Clone implementations (including circular reference handling).

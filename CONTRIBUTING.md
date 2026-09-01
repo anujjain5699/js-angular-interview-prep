@@ -24,10 +24,6 @@ Before committing:
    node your_file.js
    ```
    Ensure it executes with 0 errors and all assertions log as expected.
-2. **Auto-update the README table of contents**:
-   ```bash
-   node update_readme.js
-   ```
 
 ### 4. Submitting a Pull Request
 1. Fork the repo and create your branch:
@@ -39,4 +35,3 @@ Before committing:
    git commit -m "feat: add LRU cache implementation and test cases"
    ```
 3. Push to your branch and open a Pull Request targeting `main`.
-4. Our automated GitHub Actions CI pipeline will run all test files to verify your solution.

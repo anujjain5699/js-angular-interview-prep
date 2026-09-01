@@ -8,7 +8,7 @@
 > A curated collection of **JavaScript**, **Angular**, **HTML**, and **SQL** interview questions, machine coding challenges, and core concepts.
 
 <!-- TRAFFIC-STATS:START -->
-📊 **Repo Traffic** *(last 14 days, unique visitors only — updated 2026-08-31)*
+📊 **Repo Traffic** *(last 14 days, unique visitors only — updated 2026-09-01)*
 
 > 🧑 Unique visitors: **2**
 <!-- TRAFFIC-STATS:END -->

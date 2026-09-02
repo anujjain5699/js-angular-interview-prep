@@ -28,6 +28,7 @@
 - [x] **Fill-Forward Category Problem**: Added a SQL example in `sql/fill_missing_category.sql` that carries the previous non-null category forward across NULL rows and includes an interview question plus expected output table.
 
 ## Next Planned Topics / Tasks
+- [ ] Practice `promiseTimeout(fn, time)` edge cases and Promise.race
 - [ ] Deep Clone & Shallow Clone implementations (including circular reference handling).
 - [ ] LRU Cache implementation in JavaScript.
 - [ ] Promises from scratch / `Promise.all`, `Promise.allSettled`, `Promise.race` polyfills.
@@ -45,5 +46,10 @@
 - **Rest/Spread (`...args`)**: A flexible container/backpack allowing functions to handle any number of arguments dynamically.
 - **Worker Pool**: Avoids manual integer counting and recursion; uses `while` loops inside worker promises coordinated by `Promise.all(workers)`.
 - Maintain minimal dependencies and standard library / idiomatic modern ES6+ first.
+
+## Latest Completed Work
+- Implemented and commented `javascript/promise_timeout.js`.
+- The outer Promise controls the wrapper result; the timer rejects on timeout, while the function chain resolves or rejects it first.
+- `Promise.resolve().then(() => fn.apply(this, args))` also converts synchronous throws into Promise rejections.
 
 

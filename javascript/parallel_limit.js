@@ -13,42 +13,49 @@
 //     const results = await parallelLimit(tasks, 2);
 //     console.log(results); // [2, 3, 1, 4]
 
-
 async function parallelLimit(tasks, limit) {
-    const results = []
-    let currrentIndex = 0;
+  const results = [];
+  let currrentIndex = 0;
 
-    async function worker() {
-        while (currrentIndex < tasks.length) {
-            const taskIndex = currrentIndex++;
-            const result = await tasks[taskIndex]();
-            results.push(result);
-        }
+  async function worker() {
+    while (currrentIndex < tasks.length) {
+      const taskIndex = currrentIndex++;
+      const result = await tasks[taskIndex]();
+      results.push(result);
     }
+  }
 
-    const workerCount = Math.min(limit, tasks.length)
-    const workers = Array.from({ length: workerCount }).map(() => worker());
-    await Promise.all(workers);
-    return results;
+  // const workers = [];
+  // let workerIndex = 0;
+
+  // while (workerIndex < workerCount) {
+  //   workers.push(worker());
+  //   workerIndex++;
+  // }
+  //better we perform below operation 
+
+  const workerCount = Math.min(limit, tasks.length);
+  const workers = Array.from({ length: workerCount }).map(() => worker());
+  await Promise.all(workers);
+  return results;
 }
 
 const tasks = [
-    () => new Promise(resolve => setTimeout(() => resolve(1), 1000)),
-    () => new Promise(resolve => setTimeout(() => resolve(2), 500)),
-    () => new Promise(resolve => setTimeout(() => resolve(3), 100)),
-    () => new Promise(resolve => setTimeout(() => resolve(4), 800))
+  () => new Promise((resolve) => setTimeout(() => resolve(1), 1000)),
+  () => new Promise((resolve) => setTimeout(() => resolve(2), 500)),
+  () => new Promise((resolve) => setTimeout(() => resolve(3), 100)),
+  () => new Promise((resolve) => setTimeout(() => resolve(4), 800)),
 ];
 
 async function main() {
-    console.log("Starting tasks with limit = 2...");
-    const start = Date.now();
-    const results = await parallelLimit(tasks, 2);
-    console.log("Results:", results); // Expected: [2, 3, 1, 4]
-    console.log(`Finished in ${Date.now() - start}ms`);
+  console.log("Starting tasks with limit = 2...");
+  const start = Date.now();
+  const results = await parallelLimit(tasks, 2);
+  console.log("Results:", results); // Expected: [2, 3, 1, 4]
+  console.log(`Finished in ${Date.now() - start}ms`);
 }
 
 main();
-
 
 /*
 Explaination:

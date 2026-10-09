@@ -15,11 +15,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.TRAFFIC_SECRET }}
+          token: ${{  secrets.GITHUB_TOKEN }}
 
       - name: Fetch GitHub Traffic & Update README
         env:
-          TRAFFIC_SECRET: ${{ secrets.TRAFFIC_SECRET }}
+          TRAFFIC_SECRET: ${{  secrets.GITHUB_TOKEN }}
         run: |
           python3 << 'EOF'
           import subprocess
